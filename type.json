@@ -1,0 +1,111 @@
+{
+    "$defs": {
+        "Cat": {
+            "properties": {
+                "pet_type": {
+                    "const": "cat",
+                    "enum": [
+                        "cat"
+                    ],
+                    "title": "Pet Type",
+                    "type": "string"
+                },
+                "meows": {
+                    "title": "Meows",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "pet_type",
+                "meows"
+            ],
+            "title": "Cat",
+            "type": "object"
+        },
+        "Dog": {
+            "properties": {
+                "pet_type": {
+                    "const": "dog",
+                    "enum": [
+                        "dog"
+                    ],
+                    "title": "Pet Type",
+                    "type": "string"
+                },
+                "barks": {
+                    "title": "Barks",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "pet_type",
+                "barks"
+            ],
+            "title": "Dog",
+            "type": "object"
+        },
+        "Lizard": {
+            "properties": {
+                "pet_type": {
+                    "enum": [
+                        "reptile",
+                        "lizard"
+                    ],
+                    "title": "Pet Type",
+                    "type": "string"
+                },
+                "scales": {
+                    "title": "Scales",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "pet_type",
+                "scales"
+            ],
+            "title": "Lizard",
+            "type": "object"
+        },
+        "Pet": {
+            "discriminator": {
+                "mapping": {
+                    "cat": "#/$defs/Cat",
+                    "dog": "#/$defs/Dog",
+                    "lizard": "#/$defs/Lizard",
+                    "reptile": "#/$defs/Lizard"
+                },
+                "propertyName": "pet_type"
+            },
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/Cat"
+                },
+                {
+                    "$ref": "#/$defs/Dog"
+                },
+                {
+                    "$ref": "#/$defs/Lizard"
+                }
+            ]
+        }
+    },
+    "properties": {
+        "pet": {
+            "items": {
+                "$ref": "#/$defs/Pet"
+            },
+            "title": "Pet",
+            "type": "array"
+        },
+        "n": {
+            "title": "N",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "pet",
+        "n"
+    ],
+    "title": "Model",
+    "type": "object"
+}
